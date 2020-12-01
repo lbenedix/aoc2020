@@ -19,9 +19,9 @@ def part_2_for():
     print('part_2_for')
     for i, a in enumerate(numbers):
         for j, b in enumerate(numbers):
+            if j < i:
+                continue
             for k, c in enumerate(numbers):
-                if j < i:
-                    continue
                 if k < j:
                     continue
 
