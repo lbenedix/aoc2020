@@ -46,12 +46,12 @@ def part2_oneline():
 
 
 if __name__ == '__main__':
-    print(timeit.timeit(part_1_for, number=10))
+    print(timeit.timeit(part_1_for, number=10)/10)
 
-    print(timeit.timeit(part_2_for, number=10))
+    print(timeit.timeit(part_2_for, number=10)/10)
 
-    print(timeit.timeit(part_2_permutation, number=10))
+    print(timeit.timeit(part_2_permutation, number=10)/10)
 
-    print(timeit.timeit(part2_oneline, number=10))
+    print(timeit.timeit(part2_oneline, number=10)/10)
 
-    print(timeit.timeit(part_2_random, number=1))
+    # print(timeit.timeit(part_2_random, number=1))

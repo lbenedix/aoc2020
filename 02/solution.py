@@ -1,4 +1,5 @@
 from pathlib import Path
+import timeit
 
 passwords = [
     {
@@ -31,3 +32,5 @@ def part_2():
 if __name__ == '__main__':
     print(part_1())
     print(part_2())
+    print(timeit.timeit(part_1, number=100) / 100)
+    print(timeit.timeit(part_2, number=100) / 100)
