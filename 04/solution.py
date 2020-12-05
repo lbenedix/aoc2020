@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-lines = Path('example').open().readlines()
+lines = Path('input').open().readlines()
 
 required_fields = {
     'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid',
@@ -22,13 +22,15 @@ for line in lines:
             v = part.split(':')[1].strip()
             passport[k] = v
 
-        if len(passport.keys() - required_fields) == 0:
+        diff = required_fields - passport.keys()
+        if len(diff) == 0:
             count += 1
-            print('👍', end=' ')
+            print('👍', json.dumps(passport, sort_keys=True))
         else:
-            print('🛑', end=' ')
+            print('🛑', json.dumps(passport, sort_keys=True))
+            print('🧐', diff)
 
-        print(json.dumps(passport, sort_keys=True))
+
         passport = {}
         passport_str = ''
 
