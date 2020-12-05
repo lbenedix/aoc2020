@@ -9,7 +9,9 @@ required_fields = {
 
 passport_str = ''
 passport = {}
-count = 0
+part_1_count = 0
+part_2_count = 0
+passports = []
 for line in lines:
     line = line.strip()
     passport_str += line + ' '
@@ -22,16 +24,77 @@ for line in lines:
             v = part.split(':')[1].strip()
             passport[k] = v
 
-        diff = required_fields - passport.keys()
-        if len(diff) == 0:
-            count += 1
-            print('👍', json.dumps(passport, sort_keys=True))
-        else:
-            print('🛑', json.dumps(passport, sort_keys=True))
-            print('🧐', diff)
-
-
+        passports.append(passport)
         passport = {}
         passport_str = ''
 
-print(count)
+for passport in passports:
+    diff = required_fields - passport.keys()
+    if len(diff) == 0:
+        part_1_count += 1
+
+        if not (1920 <= int(passport['byr']) <= 2002):
+            print(json.dumps(passport, sort_keys=True))
+            print('🐣', passport['byr'])
+            continue
+
+        if not (2010 <= int(passport['iyr']) <= 2020):
+            print(json.dumps(passport, sort_keys=True))
+            print('💌', passport['iyr'])
+            continue
+
+        if not (2020 <= int(passport['eyr']) <= 2030):
+            print(json.dumps(passport, sort_keys=True))
+            print('🛑', passport['eyr'])
+            continue
+
+        if 'cm' in passport['hgt'] or 'in' in passport['hgt']:
+            if 'cm' in passport['hgt']:
+                if not (150 <= int(passport['hgt'].split('cm')[0]) <= 193):
+                    print(json.dumps(passport, sort_keys=True))
+                    print('📏', passport['hgt'])
+                    continue
+
+            if 'in' in passport['hgt']:
+                if not (59 <= int(passport['hgt'].split('in')[0]) <= 76):
+                    print(json.dumps(passport, sort_keys=True))
+                    print('📏', passport['hgt'])
+                    continue
+        else:
+            print('📏', passport['hgt'])
+            continue
+
+        if passport['hcl'][0] != '#':
+            print(json.dumps(passport, sort_keys=True))
+            print('💇', passport['hcl'])
+            continue
+
+        try:
+            int(passport['hcl'][1:], 16)
+        except ValueError as e:
+            print(json.dumps(passport, sort_keys=True))
+            print('💇', passport['hcl'])
+            continue
+
+        if passport['ecl'] not in ('amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'):
+            print(json.dumps(passport, sort_keys=True))
+            print('👁', passport['ecl'])
+            continue
+
+        if len(passport['pid']) == 9:
+            try:
+                int(passport['pid'])
+            except ValueError as e:
+                print(json.dumps(passport, sort_keys=True))
+                print('🛂', passport['pid'])
+                continue
+        else:
+            print(json.dumps(passport, sort_keys=True))
+            print('🛂', passport['pid'])
+            continue
+
+        part_2_count += 1
+        # print('👍', json.dumps(passport, sort_keys=True))
+
+print('part1', part_1_count)
+print('part2', part_2_count)
